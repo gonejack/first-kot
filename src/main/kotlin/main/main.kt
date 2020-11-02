@@ -19,7 +19,7 @@ fun main(args: Array<String>) {
     val qq = Channel<Int>()
 
     thread(name = "线程") {
-        Thread.sleep(1000 * 10)
+        Thread.sleep(10 * 1000)
         println("线程")
     }
 
@@ -36,13 +36,26 @@ fun main(args: Array<String>) {
 }
 
 suspend fun send(ch: SendChannel<Int>) {
-    val end = LocalDateTime.now().plus(Duration.ofSeconds(3))
+    val end = LocalDateTime.now().plusSeconds(3)
 
     while (end.isAfter(LocalDateTime.now())) {
         delay(1000)
-        ch.send(Timestamp(System.currentTimeMillis()).time.div(1000).toInt())
+        abc()
+        ch.send(System.currentTimeMillis().div(1000).toInt())
     }
+
     ch.close()
+}
+
+fun abc() {
+    runBlocking {
+        launch {
+
+        }
+        launch {
+
+        }
+    }
 }
 
 @InternalCoroutinesApi
